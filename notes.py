@@ -132,8 +132,8 @@ class NotesNewCommand(sublime_plugin.ApplicationCommand):
         filename = title.split("/")
         if len(filename) > 1:
             title = filename[len(filename) - 1]
-            directory = os.path.join(self.notes_dir, filename[0])
-            tag = filename[0]
+            directory = os.path.join(self.notes_dir, *filename[0:-1])
+            tag = ' '.join(filename[0:-1])
         else:
             title = filename[0]
             directory = self.notes_dir
