@@ -47,6 +47,8 @@ class NotesBufferRefreshCommand(sublime_plugin.TextCommand):
     def list_files(self, path):
         lines = []
         for root, dirs, files in os.walk(path, topdown=False):
+            if len(files) == 0:
+                continue
             level = root.replace(path, '').count(os.sep) - 1
             indent = ' ' * TAB_SIZE * (level)
             relpath = os.path.relpath(root, path)
