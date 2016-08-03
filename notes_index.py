@@ -46,14 +46,12 @@ class NotesBufferRefreshCommand(sublime_plugin.TextCommand):
 
     def list_files(self, path):
         lines = []
-        for root, dirs, files in os.walk(path, topdown=False):
-            if len(files) == 0:
-                continue
+        for root, dirs, files in os.walk(path, topdown=True):
             level = root.replace(path, '').count(os.sep) - 1
             indent = ' ' * TAB_SIZE * (level)
             relpath = os.path.relpath(root, path)
             if not relpath.startswith("."):
-                line_str = u'{0}▣ {1}'.format(indent, os.path.relpath(root, path))
+                line_str = u'{0}▣ {1}'.format(indent, os.path.basename(root))
                 lines.append((line_str, root))
             if relpath.startswith(settings().get("archive_dir")):
                 line_str = u'{0}▣ {1}'.format(indent, 'Archive')
