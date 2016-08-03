@@ -58,6 +58,8 @@ class NotesBufferRefreshCommand(sublime_plugin.TextCommand):
                 lines.append((line_str, root))
             if not relpath.startswith(".brain"):
                 subindent = ' ' * TAB_SIZE * (level + 1)
+                # Sort files according to modification date
+                files.sort(key=lambda x: os.path.getmtime(os.path.join(root, x)), reverse=True)
                 for f in files:
                     for ext in settings().get("note_file_extensions"):  # display only files with given extension
                         if fnmatch.fnmatch(f, "*." + ext):
